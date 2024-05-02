@@ -5,7 +5,7 @@ resource "aws_s3_bucket" "application_source" {
 resource "aws_s3_object" "application_source" {
   bucket = aws_s3_bucket.application_source.id
   key    = "application/default.zip"
-  source = "default_app.zip"
+  source = "sample_app_3.zip"
 }
 
 resource "aws_elastic_beanstalk_application" "example_application" {
@@ -17,6 +17,7 @@ resource "aws_elastic_beanstalk_environment" "example_application" {
   name                = "prod"
   application         = aws_elastic_beanstalk_application.example_application.name
   solution_stack_name = "64bit Amazon Linux 2023 v6.1.4 running Node.js 20"
+  version_label = aws_elastic_beanstalk_application_version.example_application.name
 
   setting {
     namespace = "aws:autoscaling:launchconfiguration"
